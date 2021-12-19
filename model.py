@@ -1,22 +1,28 @@
 
 
 class Boat:
-    def __init__(self):
+    def __init__(self, name, ):
         pass
 
     def set_boat_pos(self, x, y):
         pass
 
-    def status(self):
+    def status(self, mission: "Mission"):
         pass
 
 
 class Mission:
-    def __init__(self):
-        pass
+    def __init__(self, name: str, x: int, y: int):
+        self.boats = []
+        self.name = name
+        self.x = x
+        self.y = y
+        self.status = True
+        self.time = 0
 
-    def end_mission(self):
-        pass
+    def end(self):
+        self.status = False
+        self.time = 0
 
     def add_boat(self):
         pass
