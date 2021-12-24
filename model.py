@@ -1,10 +1,12 @@
 
 
 class Boat:
-    def __init__(self, name: str, tag: str, crew: int, passenger: int):
+    def __init__(self, name: str, tag: str, crew: int, passenger: int, x: int, y: int):
         self.name = name
         self.tag = tag
         self.crew = crew
+        self.x = x
+        self.y = y
         self.passenger = passenger
         self.distance = 0
         self.mission = False
@@ -13,8 +15,8 @@ class Boat:
         self.crew = crew
         self.passenger = passenger
 
-    def set_boat_pos(self, x_boat, x_miss, y_boat, y_miss):
-        distance = (((x_boat - x_miss) ** 2) + ((y_boat - y_miss) ** 2)) ** (1 / 2)
+    def set_boat_pos(self, x_miss, y_miss):
+        distance = (((self.x - x_miss) ** 2) + ((self.y - y_miss) ** 2)) ** (1 / 2)
         self.distance = distance
         return distance
 
