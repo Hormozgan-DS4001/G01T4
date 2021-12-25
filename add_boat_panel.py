@@ -1,8 +1,9 @@
 from configure import Button, Label, LabelFrame, Entry, Frame, Scale, Tk
 import tkinter
+from tkinter import Spinbox
 
 
-class AddBoat(Frame):
+class AddBoat(Tk):
     def __init__(self, callback_add_boat):
         super(AddBoat, self).__init__()
         self.callback_add = callback_add_boat
@@ -12,12 +13,20 @@ class AddBoat(Frame):
 
         self.tag = ""
 
-        Label(self, text="Type: ").grid(row=0, column=0)
+        frm1 = Frame(self)
+        frm1.grid(row=0, column=0)
+        Label(frm1, text="Number(00 to 99): ").grid(row=0, column=0)
+        self.ent_fi_num = Spinbox(frm1, from_=00, to=99, state="readonly", format="%02.0f")
+        self.ent_fi_num.grid(row=0, column=1)
+        Label(frm1, text="Type: ").grid(row=0, column=2)
         self.option_var = tkinter.StringVar()
         self.option_var.set("------")
         value = ["Motorboat", "PY-Yacht", "AD-Destroyer-Tender", "Landing-Craft", "Submarine"]
-        tkinter.OptionMenu(self, self.option_var, *value,
-                           command=self.result_om).grid(row=0, column=1, sticky="w")
+        tkinter.OptionMenu(frm1, self.option_var, *value,
+                           command=self.result_om).grid(row=0, column=3, sticky="w")
+        Label(frm1, text="Number(000 to 999): ").grid(row=0, column=4)
+        self.ent_sec_num = Spinbox(frm1, from_=000, to=999, state="readonly", format="%03.0f")
+        self.ent_sec_num.grid(row=0, column=5)
         self.frm_scale = Frame(self)
         Label(self.frm_scale, text="Passenger: ").grid(row=0, column=0)
         self.scale_pass = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.passenger, orient="horizontal")
@@ -25,6 +34,18 @@ class AddBoat(Frame):
         Label(self.frm_scale, text="Crow: ").grid(row=1, column=0)
         self.scale_crow = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.crow, orient="horizontal")
         self.scale_crow.grid(row=1, column=1)
+
+        frm2 = Frame(self)
+        frm2.grid(row=2, column=0)
+        Button(frm2, text="OK", command=self.add_boat).grid(row=0, column=0)
+        Button(frm2, text="Auto", command=self.add_boat_aut).grid(row=0, column=1)
+
+    def add_boat(self):
+        number1 = self.ent_fi_num.get()
+        number2 = self.ent_sec_num.get()
+
+    def add_boat_aut(self):
+        pass
 
     def result_om(self, even):
         res = self.option_var.get()
