@@ -1,4 +1,4 @@
-from configure import Button, Label, LabelFrame, Entry, Frame, Scale
+from configure import Button, Label, LabelFrame, Entry, Frame, Scale, Tk
 import tkinter
 
 
@@ -19,12 +19,14 @@ class AddBoat(Frame):
         tkinter.OptionMenu(self, self.option_var, *value,
                            command=self.result_om).grid(row=0, column=1, sticky="w")
         self.frm_scale = Frame(self)
-        self.scale = Scale()
-        self.frm_scale.grid(row=1, column=0)
+        Label(self.frm_scale, text="Passenger: ").grid(row=0, column=0)
+        self.scale_pass = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.passenger, orient="horizontal")
+        self.scale_pass.grid(row=0, column=1)
+        Label(self.frm_scale, text="Crow: ").grid(row=1, column=0)
+        self.scale_crow = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.crow, orient="horizontal")
+        self.scale_crow.grid(row=1, column=1)
 
     def result_om(self, even):
-        for child in self.frm_scale.winfo_children():
-            child.destroy()
         res = self.option_var.get()
         if res == "Motorboat":
             self.passenger = 5
@@ -47,7 +49,10 @@ class AddBoat(Frame):
             self.crow = 15
             self.typ = "S"
 
+        self.frm_scale.grid(row=1, column=0)
+        self.scale_crow.config(to=self.crow)
+        self.scale_pass.config(to=self.passenger)
 
 
-
-
+m = AddBoat("sdfsdf")
+m.mainloop()
