@@ -5,8 +5,8 @@ from tkinter import Spinbox, messagebox
 
 
 class AddBoat(Frame):
-    def __init__(self, callback_add_boat):
-        super(AddBoat, self).__init__()
+    def __init__(self, callback_add_boat, master=None):
+        super(AddBoat, self).__init__(master)
         self.callback_add = callback_add_boat
         self.passenger = 0
         self.crow = 0
