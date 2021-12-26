@@ -1,18 +1,16 @@
 import random
-
-from configure import Button, Label, LabelFrame, Entry, Frame, Scale, Tk
+from configure import Button, Label, Entry, Frame, Scale
 import tkinter
 from tkinter import Spinbox, messagebox
 
 
-class AddBoat(Tk):
+class AddBoat(Frame):
     def __init__(self, callback_add_boat):
         super(AddBoat, self).__init__()
         self.callback_add = callback_add_boat
         self.passenger = 0
         self.crow = 0
         self.typ = ""
-
 
         frm0 = Frame(self)
         frm0.grid(row=0, column=0)
@@ -108,7 +106,6 @@ class AddBoat(Tk):
             self.passenger = 5
             self.crow = 15
             self.typ = "S"
-        print(self.typ)
         self.frm_scale.grid(row=2, column=0)
         self.scale_crew.config(to=self.crow)
         self.scale_pass.config(to=self.passenger)
