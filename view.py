@@ -50,6 +50,3 @@ class ManagerPanel(Tk):
 
     def add_boat(self):
         pass
-
-m = ManagerPanel("ma", "a;d", "slfjsd", "sldfjs")
-m.mainloop()

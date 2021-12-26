@@ -1,7 +1,5 @@
-from configure import Entry, Label, Scale, Button, Frame, Tk, TopLevel
+from configure import Entry, Label, Scale, Button, Frame, TopLevel
 from tkinter import ttk
-import tkinter
-from model import Boat
 
 
 class AddMission(Frame):
@@ -44,7 +42,7 @@ class BoatMission(TopLevel):
         self.tree.bind("<Double-1>", self.add_boat_mission)
         self.list = []
         count = 0
-        for boat in self.k_boat:
+        for boat in self.k_boat():
             self.list.append(boat)
             self.tree.insert("", "end", values=[boat.name, boat.tag, boat.distance], text=str(count))
             count += 1
