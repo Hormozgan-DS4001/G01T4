@@ -31,7 +31,7 @@ class HashTable:
             if self.array[index] is None or self.array[index] == "deleted":
                 self.array[index] = new_node
                 self.count += 1
-                return index
+                return
             elif self.array[index].key == key:
                 self.array[index].value = value
                 return
