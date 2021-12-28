@@ -1,12 +1,17 @@
 from configure import Entry, Label, Scale, Button, Frame, TopLevel
+from panel_add_boat_mission import BoatMission
 from tkinter import ttk
 
 
 class AddMission(Frame):
-    def __init__(self, callback_add_mission, callback_k_boat, master=None):
+    def __init__(self, callback_add_mission, callback_k_boat, show_mission, show_boat, close, after, master=None):
         super(AddMission, self).__init__(master)
+        self.after_ = after
+        self.close = close
+        self.show_boat = show_boat
         self.callback_add_mission = callback_add_mission  # return object mission
         self.callback_k_boat = callback_k_boat
+        self.show_mission = show_mission
 
         frm1 = Frame(self)
         frm1.grid(row=0, column=0)
@@ -23,32 +28,15 @@ class AddMission(Frame):
         Button(self, text="Create", command=self.add_mission).grid(row=1, column=0)
 
     def add_mission(self):
-        BoatMission("sdf", self.callback_k_boat, self)
+        name = self.ent_name.get()
+        x = self.scale_x.get()
+        y = self.scale_y.get()
+        mis = self.callback_add_mission(name, x, y)
+        BoatMission(mis, self.callback_k_boat, self.show_mission, self.show_boat)
+        self.show_mission()
+        self.ent_name.delete(0, "end")
+        self.scale_x.set(0)
+        self.scale_y.set(0)
+        self.after_()
+        self.close()
 
-
-class BoatMission(TopLevel):
-    def __init__(self, mission, k_boat, master=None):
-        super(BoatMission, self).__init__(master)
-        self.k_boat = k_boat
-        self.mission = mission
-
-        Label(self, text="For Add Boat To Mission Please Double Click on Boat!!!")
-        self.tree = ttk.Treeview(self, show="headings", selectmode="browse")
-        self.tree["column"] = ("name", "tag", "distance")
-        self.tree.heading("name", text="Name")
-        self.tree.heading("tag", text="Tag")
-        self.tree.heading("distance", text="Distance")
-        self.tree.grid(row=1, column=0)
-        self.tree.bind("<Double-1>", self.add_boat_mission)
-        self.list = []
-        count = 0
-        for boat in self.k_boat():
-            self.list.append(boat)
-            self.tree.insert("", "end", values=[boat.name, boat.tag, boat.distance], text=str(count))
-            count += 1
-
-    def add_boat_mission(self, event):
-        item = self.tree.identify("item", event.x, event.y)
-        ID = self.tree.item(item)["text"]
-        res = self.list[int(ID)]
-        self.mission.add_boat(res)

@@ -1,5 +1,5 @@
 import datetime
-from data_structure.data_structure import Sll, HashTable
+from data_structure.data_structure import Sll, HashTable, DArray
 
 
 class Boat:
@@ -10,7 +10,7 @@ class Boat:
         self.passenger = passenger
         self.x = x
         self.y = y
-        self.mission = False
+        self.flag = False
 
     def change_cr_pass(self, crew: int, passenger: int):
         self.crew = crew
@@ -25,11 +25,11 @@ class Boat:
         return distance
 
     def status(self, mission: "Mission" = None):
-        flag = False
         if mission:
-            flag = mission.status
-        self.mission = flag
-        return self.mission
+            self.flag = mission
+        if self.flag:
+            return self.flag.status
+        return False
 
 
 class Mission:
@@ -38,7 +38,7 @@ class Mission:
         self.name = name
         self.x = x
         self.y = y
-        self.status = True
+        self.status = name
         self.time = datetime.datetime.now()
 
     def end(self):
@@ -60,7 +60,7 @@ class Core:
         self.A_tag = 0
         self.L_tag = 0
         self.S_tag = 0
-        self.key = []
+        self.key = DArray()
 
     def set_boat_pos(self, tag, x, y):
         res = self.li_boat[tag]
@@ -84,12 +84,25 @@ class Core:
         self.key.append(tag)
 
     def new_mission(self, name: str, x: int, y: int):
-        pass
+        mission = Mission(name, x, y)
+        self.li_mission.add(mission)
+        return mission
 
     def k_boat(self, x, y, k=20):
-        res = self._quickSort(self.key, 0, len(self.key) - 1, x, y)
-        for i in range(k):
-            yield self.li_boat[res[i]]
+        self._quickSort(self.key, 0, len(self.key) - 1, x, y)
+        count = 0
+        for i in range(len(self.key)):
+            if count >= k:
+                break
+            if not self.li_boat[self.key[i]].status():
+                count += 1
+                yield self.li_boat[self.key[i]]
+
+    def show_boat(self):
+        return self.li_boat
+
+    def show_mission(self):
+        return self.li_mission
 
     def _partition(self, arr, low, high, x, y):
         i = low - 1
@@ -110,9 +123,3 @@ class Core:
             pi = self._partition(arr, low, high, x, y)
             self._quickSort(arr, low, pi - 1, x, y)
             self._quickSort(arr, pi + 1, high, x, y)
-
-
-
-
-
-

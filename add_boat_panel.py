@@ -5,11 +5,13 @@ from tkinter import Spinbox, messagebox
 
 
 class AddBoat(Frame):
-    def __init__(self, callback_add_boat, master=None):
+    def __init__(self, callback_add_boat, callback_show_boat, close, master=None):
         super(AddBoat, self).__init__(master)
         self.callback_add = callback_add_boat
+        self.close = close
+        self.callback_show_boat = callback_show_boat
         self.passenger = 0
-        self.crow = 0
+        self.crew = 0
         self.typ = ""
 
         frm0 = Frame(self)
@@ -44,7 +46,7 @@ class AddBoat(Frame):
         self.scale_pass = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.passenger, orient="horizontal")
         self.scale_pass.grid(row=0, column=1)
         Label(self.frm_scale, text="Crew: ").grid(row=1, column=0)
-        self.scale_crew = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.crow, orient="horizontal")
+        self.scale_crew = Scale(self.frm_scale, width=18, length=122, from_=1, to=self.crew, orient="horizontal")
         self.scale_crew.grid(row=1, column=1)
 
         frm2 = Frame(self)
@@ -65,6 +67,21 @@ class AddBoat(Frame):
         passenger = self.scale_pass.get()
         crew = self.scale_crew.get()
         self.callback_add(name, tag, crew, passenger, x, y)
+        self.callback_show_boat()
+        self.ent_nam.delete(0, "end")
+        self.ent_fi_num.config(state="normal")
+        self.ent_fi_num.delete(0, "end")
+        self.ent_fi_num.insert(0, 00)
+        self.ent_fi_num.config(state="readonly")
+        self.ent_sec_num.config(state="normal")
+        self.ent_sec_num.delete(0, "end")
+        self.ent_sec_num.insert(0, 000)
+        self.ent_sec_num.config(state="readonly")
+        self.ent_x.set(0)
+        self.ent_y.set(0)
+        self.scale_crew.set(0)
+        self.scale_pass.set(0)
+        self.close()
 
     def add_boat_aut(self):
         if self.typ == "":
@@ -83,29 +100,44 @@ class AddBoat(Frame):
         passenger = self.scale_pass.get()
         crew = self.scale_crew.get()
         self.callback_add(name, tag, crew, passenger, x, y)
+        self.callback_show_boat()
+        self.ent_nam.delete(0, "end")
+        self.ent_fi_num.config(state="normal")
+        self.ent_fi_num.delete(0, "end")
+        self.ent_fi_num.insert(0, 00)
+        self.ent_fi_num.config(state="readonly")
+        self.ent_sec_num.config(state="normal")
+        self.ent_sec_num.delete(0, "end")
+        self.ent_sec_num.insert(0, 000)
+        self.ent_sec_num.config(state="readonly")
+        self.ent_x.set(0)
+        self.ent_y.set(0)
+        self.scale_crew.set(0)
+        self.scale_pass.set(0)
+        self.close()
 
     def result_om(self, even):
         res = self.option_var.get()
         if res == "Motorboat":
             self.passenger = 5
-            self.crow = 2
+            self.crew = 2
             self.typ = "M"
         elif res == "PY-Yacht":
             self.passenger = 20
-            self.crow = 5
+            self.crew = 5
             self.typ = "P"
         elif res == "AD-Destroyer-Tender":
             self.passenger = 100
-            self.crow = 20
+            self.crew = 20
             self.typ = "A"
         elif res == "Landing-Craft":
             self.passenger = 150
-            self.crow = 5
+            self.crew = 5
             self.typ = "L"
         elif res == "Submarine":
             self.passenger = 5
-            self.crow = 15
+            self.crew = 15
             self.typ = "S"
         self.frm_scale.grid(row=2, column=0)
-        self.scale_crew.config(to=self.crow)
+        self.scale_crew.config(to=self.crew)
         self.scale_pass.config(to=self.passenger)

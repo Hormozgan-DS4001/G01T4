@@ -38,13 +38,14 @@ class HashTable:
         raise ValueError("Hashtable is full")
 
     def __iter__(self):
-        count = -1
+        count = 0
         while count < self.size:
-            count += 1
             if self.array[count] is None:
+                count += 1
                 continue
             else:
-                yield self.array[count].key, self.array[count].value
+                yield self.array[count].value
+                count += 1
 
     def __delitem__(self, key):
         for i in range(self.size):
@@ -142,8 +143,16 @@ class DArray:
         self.capacity = capacity
         self.array = [None] * self.capacity
 
+    def __repr__(self):
+        return "DArray" + repr(self.array[:self.length])
+
     def __len__(self):
         return self.length
+
+    def __iter__(self):
+        count = 0
+        while count < self.length:
+            yield self.array[count]
 
     def __getitem__(self, item):
         assert 0 <= item < self.length
