@@ -134,3 +134,37 @@ class Sll:
             return
         new_node.next = self.head
         self.head = new_node
+
+
+class DArray:
+    def __init__(self, capacity=10):
+        self.length = 0
+        self.capacity = capacity
+        self.array = [None] * self.capacity
+
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, item):
+        assert 0 <= item < self.length
+        return self.array[item]
+
+    def __setitem__(self, key, value):
+        assert 0 <= key < self.length, 'Index out of range'
+        self.array[key] = value
+
+    def is_empty(self):
+        return self.length == 0
+
+    def append(self, data):
+        if self.capacity == self.length:
+            self._resize(2 * self.capacity)
+        self.array[self.length] = data
+        self.length += 1
+
+    def _resize(self, capacity):
+        a = [None] * capacity
+        for i in range(self.length):
+            a[i] = self.array[i]
+        self.capacity = capacity
+        self.array = a
