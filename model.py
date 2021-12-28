@@ -38,7 +38,7 @@ class Mission:
         self.name = name
         self.x = x
         self.y = y
-        self.status = True
+        self.status = name
         self.time = datetime.datetime.now()
 
     def end(self):
@@ -84,12 +84,24 @@ class Core:
         self.key.append(tag)
 
     def new_mission(self, name: str, x: int, y: int):
-        pass
+        mission = Mission(name, x, y)
+        self.li_mission.add(mission)
 
     def k_boat(self, x, y, k=20):
         res = self._quickSort(self.key, 0, len(self.key) - 1, x, y)
-        for i in range(k):
-            yield self.li_boat[res[i]]
+        count = 0
+        for i in range(len(res)):
+            if count >= k:
+                break
+            if not self.li_boat[res[i]].status:
+                count += 1
+                yield self.li_boat[res[i]]
+
+    def show_boat(self):
+        return self.li_boat
+
+    def show_mission(self):
+        return self.li_mission
 
     def _partition(self, arr, low, high, x, y):
         i = low - 1
