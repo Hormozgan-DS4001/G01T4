@@ -16,6 +16,10 @@ class Boat:
         self.crew = crew
         self.passenger = passenger
 
+    def change_pos(self, x, y):
+        self.x = x
+        self.y = y
+
     def distance_boat(self, x_miss, y_miss):
         distance = (((self.x - x_miss) ** 2) + ((self.y - y_miss) ** 2)) ** (1 / 2)
         return distance
@@ -51,15 +55,35 @@ class Core:
     def __init__(self):
         self.li_mission = Sll()
         self.li_boat = HashTable()
+        self.M_tag = 0
+        self.P_tag = 0
+        self.A_tag = 0
+        self.L_tag = 0
+        self.S_tag = 0
         self.key = []
 
     def set_boat_pos(self, tag, x, y):
-        pass
+        res = self.li_boat[tag]
+        res.change_pos(x, y)
 
-    def new_boat(self):
-        pass
+    def new_boat(self, name: str, tag: str, crew: int, passenger: int, x: int, y: int):
+        if tag[2] == "L" and self.L_tag < 800:
+            self.L_tag += 1
+        elif tag[2] == "M" and self.M_tag < 800:
+            self.M_tag += 1
+        elif tag[2] == "P" and self.P_tag < 800:
+            self.P_tag += 1
+        elif tag[2] == "S" and self.S_tag < 800:
+            self.S_tag += 1
+        elif tag[2] == "A" and self.A_tag < 800:
+            self.A_tag += 1
+        else:
+            return
+        new_boat = Boat(name, tag, crew, passenger, x, y)
+        self.li_boat[tag] = new_boat
+        self.key.append(tag)
 
-    def new_mission(self):
+    def new_mission(self, name: str, x: int, y: int):
         pass
 
     def k_boat(self, x, y, k=20):
