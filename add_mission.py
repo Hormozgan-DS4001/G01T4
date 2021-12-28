@@ -3,10 +3,11 @@ from tkinter import ttk
 
 
 class AddMission(Frame):
-    def __init__(self, callback_add_mission, callback_k_boat, master=None):
+    def __init__(self, callback_add_mission, callback_k_boat, show_mission, master=None):
         super(AddMission, self).__init__(master)
         self.callback_add_mission = callback_add_mission  # return object mission
         self.callback_k_boat = callback_k_boat
+        self.show_mission = show_mission
 
         frm1 = Frame(self)
         frm1.grid(row=0, column=0)
@@ -23,7 +24,11 @@ class AddMission(Frame):
         Button(self, text="Create", command=self.add_mission).grid(row=1, column=0)
 
     def add_mission(self):
-        BoatMission("sdf", self.callback_k_boat, self)
+        name = self.ent_name.get()
+        x = self.scale_x.get()
+        y = self.scale_y.get()
+        mis = self.callback_add_mission(name, x, y)
+        BoatMission(mis, self.callback_k_boat, self)
 
 
 class BoatMission(TopLevel):
