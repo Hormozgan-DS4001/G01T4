@@ -23,3 +23,28 @@ class HashChain:
             print('[',i,']',end=' ')
             self.hashtable[i].display()
         print()
+
+
+class Sll:
+    class _Node:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def add(self, data):
+        new_node = self._Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        new_node.next = self.head
+        self.head = new_node
+
+    def __iter__(self):
+        t = self.head
+        while t:
+            yield t.data
+            t = t.next
