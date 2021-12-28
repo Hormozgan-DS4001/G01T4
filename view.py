@@ -1,10 +1,10 @@
 import datetime
-
 from configure import Entry, Tk, TopLevel, Frame, LabelFrame, Button, Scale, Label
 from tkinter import ttk
 from add_boat_panel import AddBoat
 from add_mission import AddMission
 from change_pass_crew import ChangePassCrew
+from panel_add_boat_mission import BoatToMission
 import tkinter as tk
 
 
@@ -103,7 +103,11 @@ class ManagerPanel(Tk):
         self.not_tab.add(panel, text="Change boat")
 
     def mission_panel(self, event):
-        pass
+        item = self.tree_mis.identify("item", event.x, event.y)
+        ID = self.tree_mis.item(item)["text"]
+        res = self.li_mission[int(ID)]
+        panel = BoatToMission(res, self.callback_k_boat, self.not_tab)
+        self.not_tab.add(panel, text="Add Boat")
 
 
 
