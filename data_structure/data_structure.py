@@ -35,7 +35,7 @@ class Sll:
         self.head = None
         self.length = 0
 
-    def insert(self, data):
+    def add(self, data):
         new_node = self._Node(data)
         if self.head is None:
             self.head = new_node
