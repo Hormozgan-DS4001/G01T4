@@ -4,9 +4,11 @@ from tkinter import ttk
 
 
 class AddMission(Frame):
-    def __init__(self, callback_add_mission, callback_k_boat, show_mission, close, master=None):
+    def __init__(self, callback_add_mission, callback_k_boat, show_mission, show_boat, close, after, master=None):
         super(AddMission, self).__init__(master)
+        self.after_ = after
         self.close = close
+        self.show_boat = show_boat
         self.callback_add_mission = callback_add_mission  # return object mission
         self.callback_k_boat = callback_k_boat
         self.show_mission = show_mission
@@ -30,10 +32,11 @@ class AddMission(Frame):
         x = self.scale_x.get()
         y = self.scale_y.get()
         mis = self.callback_add_mission(name, x, y)
-        BoatMission(mis, self.callback_k_boat)
+        BoatMission(mis, self.callback_k_boat, self.show_mission, self.show_boat)
         self.show_mission()
         self.ent_name.delete(0, "end")
         self.scale_x.set(0)
         self.scale_y.set(0)
+        self.after_()
         self.close()
 
