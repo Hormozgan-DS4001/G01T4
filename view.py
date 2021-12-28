@@ -4,6 +4,7 @@ from configure import Entry, Tk, TopLevel, Frame, LabelFrame, Button, Scale, Lab
 from tkinter import ttk
 from add_boat_panel import AddBoat
 from add_mission import AddMission
+from change_pass_crew import ChangePassCrew
 import tkinter as tk
 
 
@@ -86,8 +87,6 @@ class ManagerPanel(Tk):
                                      text=str(count))
             count += 1
 
-
-
     def add_boat(self):
         panel = AddBoat(self.callback_add_boat, self.not_tab)
         self.not_tab.add(panel, text="ADD BOAT")
@@ -97,7 +96,20 @@ class ManagerPanel(Tk):
         self.not_tab.add(panel, text="ADD MISSION")
 
     def boat_panel(self, event):
-        pass
+        item = self.tree_boat.identify("item", event.x, event.y)
+        ID = self.tree_boat.item(item)["text"]
+        res = self.list_boat[int(ID)]
+        panel = ChangePassCrew(res, self.not_tab)
+        self.not_tab.add(panel, text="Change boat")
 
     def mission_panel(self, event):
         pass
+
+
+
+
+
+
+
+
+
