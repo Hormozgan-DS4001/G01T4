@@ -64,6 +64,8 @@ class Core:
 
     def set_boat_pos(self, tag, x, y):
         res = self.li_boat[tag]
+        if res is None:
+            return False
         res.change_pos(x, y)
 
     def new_boat(self, name: str, tag: str, crew: int, passenger: int, x: int, y: int):

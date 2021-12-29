@@ -35,8 +35,8 @@ class AddMission(Frame):
         BoatMission(mis, self.callback_k_boat, self.show_mission, self.show_boat)
         self.show_mission()
         self.ent_name.delete(0, "end")
-        self.scale_x.set(0)
-        self.scale_y.set(0)
+        self.scale_x.set(1)
+        self.scale_y.set(1)
         self.after_()
         self.close()
 

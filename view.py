@@ -5,18 +5,20 @@ from add_boat_panel import AddBoat
 from add_mission import AddMission
 from change_pass_crew import ChangePassCrew
 from panel_add_boat_mission import BoatMission
+from change_pos import ChangePos
 import tkinter as tk
 
 
 class ManagerPanel(Tk):
     def __init__(self, callback_add_boat, callback_add_mission, callback_show_boat, callback_show_mission,
-                 callback_k_boat):
+                 callback_k_boat, change_position):
         super(ManagerPanel, self).__init__()
         self.callback_add_boat = callback_add_boat
         self.callback_add_mission = callback_add_mission
         self.callback_show_boat = callback_show_boat
         self.callback_show_mission = callback_show_mission
         self.callback_k_boat = callback_k_boat
+        self.callback_change_pos = change_position
 
         self.not_tab = ttk.Notebook(self)
         self.not_tab.grid(row=0, column=0)
@@ -33,6 +35,7 @@ class ManagerPanel(Tk):
         frm_btn.grid(row=1, column=0)
         Button(frm_btn, text="New Boat", command=self.add_boat).grid(row=0, column=0)
         Button(frm_btn, text="New Mission", command=self.new_mission).grid(row=0, column=1)
+        Button(frm_btn, text="Change Position", command=self.change_pos).grid(row=0, column=2)
 
         Label(lbl_frm, text="BOATS LIST..↴").grid(row=2, column=0)
         self.tree_boat = ttk.Treeview(lbl_frm, show="headings", selectmode="browse")
@@ -56,8 +59,15 @@ class ManagerPanel(Tk):
         self.tree_mis.bind("<Double-1>", self.mission_panel)
         self.li_mission = []
 
+    def change_pos(self):
+        panel = ChangePos(self.callback_change_pos, self.close, self.show_boat, self.not_tab)
+        self.not_tab.add(panel, text="Change Position")
+        self.not_tab.select(panel)
+
     def show_boat(self):
         self.tree_boat.delete(*self.tree_boat.get_children())
+        for child in self.frm_map.winfo_children():
+            child.destroy()
         boats = self.callback_show_boat()
         self.list_boat = []
         count = 0
@@ -70,7 +80,7 @@ class ManagerPanel(Tk):
             else:
                 self.tree_boat.insert("", 0, values=(boat.name, tag, boat.crew, boat.passenger, boat.status()),
                                       text=str(count))
-            Label(self.frm_map, text="*").place(x=boat.x, y=boat.y)
+            Label(self.frm_map, text="*", bg="white").place(x=boat.x, y=boat.y)
             count += 1
 
     def show_mission(self):
