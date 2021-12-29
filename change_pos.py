@@ -11,7 +11,7 @@ class ChangePos(Frame):
 
         frm1 = Frame(self)
         frm1.grid(row=0, column=0)
-        Label(frm1, text="Boat Tag:").grid(row=0, column=0)
+        Label(frm1, text="Boat Tag (with out -):").grid(row=0, column=0)
         self.ent_tag = Entry(frm1)
         self.ent_tag.grid(row=0, column=1)
 
@@ -20,7 +20,7 @@ class ChangePos(Frame):
         Label(frm2, text="X:").grid(row=0, column=0, sticky="E")
         self.ent_x = Scale(frm2, width=18, length=122, from_=1, to=500, orient="horizontal")
         self.ent_x.grid(row=0, column=1)
-        Label(frm1, text="Y:").grid(row=0, column=2)
+        Label(frm2, text="Y:").grid(row=0, column=2)
         self.ent_y = Scale(frm2, width=18, length=122, from_=1, to=200, orient="horizontal")
         self.ent_y.grid(row=0, column=3)
 

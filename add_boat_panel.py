@@ -77,10 +77,10 @@ class AddBoat(Frame):
         self.ent_sec_num.delete(0, "end")
         self.ent_sec_num.insert(0, 000)
         self.ent_sec_num.config(state="readonly")
-        self.ent_x.set(0)
-        self.ent_y.set(0)
-        self.scale_crew.set(0)
-        self.scale_pass.set(0)
+        self.ent_x.set(1)
+        self.ent_y.set(1)
+        self.scale_crew.set(1)
+        self.scale_pass.set(1)
         self.close()
 
     def add_boat_aut(self):
